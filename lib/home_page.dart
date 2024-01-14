@@ -15,36 +15,66 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: Column(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BlocConsumer<CounterCubit, int>(
+            listener: (context, state){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("سلام چطوری خوبی....."),
+                duration: Duration(milliseconds: 500),
+              ));
+            },
+            builder: (context, state){
+              return Text(state.toString(), style: TextStyle(fontSize: 20),);
+            },
+          ),
+
+          //useing blocBuilder and blocListener ....
+          // BlocListener<CounterCubit, int>(
+          //     listener: (context, state) =>{
+          //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("سلام چطوری خوبی....."),
+          //
+          //   )),
+          // },
+          //   child: Container(),
+          //
+          // ),
+
+          // BlocBuilder<CounterCubit, int>(
+          //   builder: (context, state) {
+          //     return Directionality(
+          //       textDirection: TextDirection.ltr,
+          //         child: Text(state.toString(), style: TextStyle(fontSize: 20),));
+          //   },
+          // ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<CounterCubit, int>(
-                builder: (context, state) {
-                  return Directionality(
-                    textDirection: TextDirection.ltr,
-                      child: Text(state.toString(), style: TextStyle(fontSize: 20),));
-                },
-              ),
-              SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(onPressed: () {
+              ElevatedButton(
+                  onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increase();
-                  }, child: Directionality(
+                  },
+                  child: Directionality(
                       textDirection: TextDirection.ltr,
                       child: Text("increase"))),
-                  SizedBox(width: 20,),
-                  ElevatedButton(onPressed: () {
+              SizedBox(
+                width: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrease();
-                  }, child: Directionality(
+                  },
+                  child: Directionality(
                       textDirection: TextDirection.ltr,
                       child: Text("decrease"))),
-                ],
-              )
             ],
-          ),
-        )
-    );
+          )
+        ],
+      ),
+    ));
   }
 }
