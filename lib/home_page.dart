@@ -19,18 +19,34 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BlocConsumer<CounterCubit, int>(
-            listener: (context, state){
+            listenWhen: (previous, current) {
+              if (current == 3) {
+                return true;
+              }
+              return false;
+            },
+            listener: (context, state) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("سلام چطوری خوبی....."),
                 duration: Duration(milliseconds: 500),
               ));
             },
-            builder: (context, state){
-              return Text(state.toString(), style: TextStyle(fontSize: 20),);
+            buildWhen: (previous, current) {
+              if (current == 3) {
+                return true;
+              }
+              return false;
+            },
+            builder: (context, state) {
+              return Text(
+                state.toString(),
+                style: TextStyle(fontSize: 20),
+              );
             },
           ),
 
-          //useing blocBuilder and blocListener ....
+          //*****useing blocBuilder and blocListener ....****
+
           // BlocListener<CounterCubit, int>(
           //     listener: (context, state) =>{
           //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("سلام چطوری خوبی....."),
